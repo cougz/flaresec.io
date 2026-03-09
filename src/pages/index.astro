@@ -1,0 +1,346 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="FlareSec - Under Construction">
+  <style>
+    .page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 0 24px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 40px 0;
+      max-width: 680px;
+      width: 100%;
+    }
+
+    .hero-title {
+      font-size: 2.8rem;
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #ffffff 0%, var(--cf-orange-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .hamster-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 40px 0;
+    }
+
+    .wheel-and-hamster {
+      --dur: 1s;
+      position: relative;
+      width: 12em;
+      height: 12em;
+      font-size: 14px;
+    }
+
+    .wheel, .hamster, .hamster__body, .spoke {
+      position: absolute;
+    }
+
+    .wheel {
+      z-index: 1;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(100% 100% at center,hsla(0,0%,60%,0.3) 30%,hsla(0,0%,55%,0.1) 63%,hsla(0,0%,50%,0) 68%);
+      border-radius: 50%;
+      -webkit-animation: wheelStart 2s ease-out 0s 1,wheelSpin var(--dur) linear 2s infinite;
+      animation: wheelStart 2s ease-out 0s 1,wheelSpin var(--dur) linear 2s infinite;
+    }
+
+    .wheel::before, .wheel::after {
+      content: '';
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      position: absolute;
+      border: 0.1em dashed var(--text-muted);
+    }
+
+    .wheel::after {
+      transform: rotate(45deg);
+    }
+
+    .hamster {
+      -webkit-animation: hamsterBound var(--dur) ease-in-out infinite;
+      animation: hamsterBound var(--dur) ease-in-out infinite;
+      top: 50%;
+      left: calc(100% * 1 / 3 - 0.1em);
+      width: 3.75em;
+      height: 3.5em;
+      transform: rotate(4deg) translate(-11em,0);
+      transform-origin: 50% 75%;
+    }
+
+    .hamster__body {
+      -webkit-animation: hamsterBody var(--dur) ease-in-out infinite;
+      animation: hamsterBody var(--dur) ease-in-out infinite;
+      bottom: -0.25em;
+      left: 0;
+      width: 100%;
+      height: 75%;
+      background: linear-gradient(hsl(30,90%,90%) 80%,hsl(30,90%,80%) 80%);
+      border-radius: 45% 45% 40% 40%;
+      box-shadow: 0.1em 0.3em 1.5em 0.5em hsla(0,0%,0%,0.15);
+      z-index: 1;
+    }
+
+    .hamster__head {
+      -webkit-animation: hamsterHead var(--dur) ease-in-out infinite;
+      animation: hamsterHead var(--dur) ease-in-out infinite;
+      z-index: 3;
+      border-radius: 50% 50% 30% 30%;
+      position: absolute;
+      top: 0;
+      left: -0.4em;
+      width: 2.2em;
+      height: 1.8em;
+      background: linear-gradient(hsl(30,90%,90%) 70%,hsl(30,90%,75%) 70%);
+      box-shadow: 0.1em 0.2em 0.6em hsla(0,0%,0%,0.2);
+    }
+
+    .hamster__ear {
+      position: absolute;
+      border-radius: 50%;
+      top: -0.15em;
+      left: 0.3em;
+      width: 0.8em;
+      height: 0.8em;
+      background: hsl(30,90%,85%);
+      box-shadow: 0 0.1em 0.1em hsla(0,0%,0%,0.1);
+    }
+
+    .hamster__eye {
+      position: absolute;
+      border-radius: 50%;
+      top: 0.35em;
+      left: 1.2em;
+      width: 0.3em;
+      height: 0.3em;
+      background: #101010;
+    }
+
+    .hamster__nose {
+      position: absolute;
+      border-radius: 50%;
+      top: 0.6em;
+      left: 1.6em;
+      width: 0.2em;
+      height: 0.2em;
+      background: hsl(0,90%,75%);
+    }
+
+    .hamster__limb {
+      position: absolute;
+      border-radius: 0.3em 0.3em 0.4em 0.4em;
+      top: 55%;
+      width: 1em;
+      height: 0.8em;
+      transform-origin: 50% 0;
+      background: linear-gradient(hsl(30,90%,80%) 50%,hsl(30,90%,70%) 50%);
+    }
+
+    .hamster__limb--fr, .hamster__limb--fl {
+      -webkit-animation: hamsterFRLimb var(--dur) linear infinite;
+      animation: hamsterFRLimb var(--dur) linear infinite;
+      left: 0.8em;
+      z-index: 2;
+    }
+
+    .hamster__limb--fr {
+      -webkit-animation-delay: calc(var(--dur) * 0.5);
+      animation-delay: calc(var(--dur) * 0.5);
+    }
+
+    .hamster__limb--fl {
+      -webkit-animation-delay: calc(var(--dur) * 0);
+      animation-delay: calc(var(--dur) * 0);
+    }
+
+    .hamster__limb--br, .hamster__limb--bl {
+      -webkit-animation: hamsterBRLimb var(--dur) linear infinite;
+      animation: hamsterBRLimb var(--dur) linear infinite;
+      left: 2.1em;
+    }
+
+    .hamster__limb--br {
+      -webkit-animation-delay: calc(var(--dur) * 0.5);
+      animation-delay: calc(var(--dur) * 0.5);
+    }
+
+    .hamster__limb--bl {
+      -webkit-animation-delay: calc(var(--dur) * 0);
+      animation-delay: calc(var(--dur) * 0);
+    }
+
+    .hamster__tail {
+      -webkit-animation: hamsterTail var(--dur) linear infinite;
+      animation: hamsterTail var(--dur) linear infinite;
+      position: absolute;
+      border-radius: 0 0.6em 0.4em 0;
+      top: 60%;
+      right: -0.5em;
+      width: 1em;
+      height: 0.5em;
+      transform: rotate(10deg) translate(0,0.4em);
+      transform-origin: 0.1em 0.1em;
+      background: hsl(30,90%,80%);
+    }
+
+    .spoke {
+      -webkit-animation: spoke var(--dur) linear infinite;
+      animation: spoke var(--dur) linear infinite;
+      top: 50%;
+      left: 50%;
+      width: 0.2em;
+      height: 0.2em;
+      z-index: 2;
+      border-radius: 50%;
+      background: hsla(0,0%,60%,1);
+      box-shadow: 0 0 0 0.1em hsla(0,0%,55%,0.9), 0 0 0 0.2em hsla(0,0%,50%,0.8), 0 0 0 0.3em hsla(0,0%,45%,0.7);
+    }
+
+    .spoke::before, .spoke::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      width: 0.2em;
+      height: 0.8em;
+      background: hsla(0,0%,55%,0.8);
+      transform-origin: 50% 0;
+    }
+
+    .spoke::before {
+      top: -2.5em;
+    }
+
+    .spoke::after {
+      top: 1.5em;
+    }
+
+    .spoke:nth-child(2) {
+      transform: rotate(45deg);
+    }
+
+    .spoke:nth-child(3) {
+      transform: rotate(90deg);
+    }
+
+    .spoke:nth-child(4) {
+      transform: rotate(135deg);
+    }
+
+    @keyframes wheelStart {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    @keyframes wheelSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(-360deg); }
+    }
+
+    @keyframes hamsterBound {
+      from, to { transform: rotate(4deg) translate(-11em,0); }
+      50% { transform: rotate(0deg) translate(-11em,0.1em); }
+    }
+
+    @keyframes hamsterBody {
+      from, to { transform: rotate(0deg); }
+      25% { transform: rotate(2deg); }
+      75% { transform: rotate(-2deg); }
+    }
+
+    @keyframes hamsterHead {
+      from, to { transform: rotate(0deg); }
+      25% { transform: rotate(4deg); }
+      75% { transform: rotate(-2deg); }
+    }
+
+    @keyframes hamsterFRLimb {
+      from, to { transform: rotate(-50deg) translateX(0); }
+      25% { transform: rotate(0deg) translateX(0.2em); }
+      50% { transform: rotate(50deg) translateX(0); }
+      75% { transform: rotate(0deg) translateX(-0.2em); }
+    }
+
+    @keyframes hamsterBRLimb {
+      from, to { transform: rotate(50deg) translateX(0); }
+      25% { transform: rotate(0deg) translateX(-0.2em); }
+      50% { transform: rotate(-50deg) translateX(0); }
+      75% { transform: rotate(0deg) translateX(0.2em); }
+    }
+
+    @keyframes hamsterTail {
+      from, 5% { transform: rotate(10deg) translate(0,0.4em); }
+      25%, 45% { transform: rotate(10deg) translate(0.15em,0.5em); }
+      50%, 70% { transform: rotate(10deg) translate(0,0.4em); }
+      75%, 95% { transform: rotate(10deg) translate(-0.15em,0.5em); }
+    }
+
+    @keyframes spoke {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 600px) {
+      .hero { padding: 32px 0; }
+      .hero-title { font-size: 2rem; }
+    }
+  </style>
+
+  <main class="page">
+    <section class="hero">
+      <div class="hamster-container">
+        <div class="wheel-and-hamster" role="img" aria-label="Animated image of a hamster running in a wheel">
+          <div class="wheel"></div>
+          <div class="hamster">
+            <div class="hamster__body">
+              <div class="hamster__head">
+                <div class="hamster__ear"></div>
+                <div class="hamster__eye"></div>
+                <div class="hamster__nose"></div>
+              </div>
+              <div class="hamster__limb hamster__limb--fr"></div>
+              <div class="hamster__limb hamster__limb--fl"></div>
+              <div class="hamster__limb hamster__limb--br"></div>
+              <div class="hamster__limb hamster__limb--bl"></div>
+              <div class="hamster__tail"></div>
+            </div>
+          </div>
+          <div class="spoke"></div>
+          <div class="spoke"></div>
+          <div class="spoke"></div>
+          <div class="spoke"></div>
+        </div>
+      </div>
+      <h1 class="hero-title">Under Construction</h1>
+      <p class="hero-subtitle">
+        We're building something great. Check back soon for updates.
+      </p>
+    </section>
+  </main>
+</Layout>

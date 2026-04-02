@@ -1,0 +1,6 @@
+name = "flaresec-io"
+compatibility_date = "2026-04-02"
+main = "./dist/_worker.js"
+
+[site]
+bucket = "./dist"

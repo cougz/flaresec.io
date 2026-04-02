@@ -1,6 +1,4 @@
-name = "flaresec-io"
+name = "flaresecio"
 compatibility_date = "2026-04-02"
-main = "./dist/_worker.js"
-
-[site]
-bucket = "./dist"
+compatibility_flags = ["nodejs_compat"]
+main = "./dist/_worker.js/index.js"

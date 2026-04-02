@@ -1,0 +1,31 @@
+# FlareSec.io
+
+> Cloudflare security and performance solutions
+
+## About
+
+FlareSec.io provides expert guidance, tools, and resources for implementing Cloudflare's security and performance solutions. We help organizations protect their applications and optimize their digital presence using Cloudflare's global network.
+
+## MCP Server
+
+This site provides a Model Context Protocol (MCP) server at `/mcp` with tools to help AI assistants understand Cloudflare concepts.
+
+### Available Tools
+
+- `get_cloudflare_basics`: Get information about Cloudflare's core services and capabilities
+
+## Resources
+
+- Cloudflare Application Services
+- Zero Trust Security (SASE)
+- Developer Platform (Workers, Pages, R2)
+- Network Services (DNS, WAF, DDoS)
+- Performance Optimization
+
+## Contact
+
+For more information, visit the main site or connect with our team.
+
+## Usage Notes
+
+This site is optimized for LLM consumption. The MCP server provides structured access to Cloudflare knowledge and can help answer questions about implementation strategies, best practices, and technical concepts.

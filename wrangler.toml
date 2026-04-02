@@ -1,8 +1,0 @@
-name = "flaresecio"
-compatibility_date = "2026-04-02"
-compatibility_flags = ["nodejs_compat"]
-main = "./dist/_worker.js/index.js"
-
-[assets]
-directory = "./dist"
-binding = "ASSETS"
